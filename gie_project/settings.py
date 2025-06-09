@@ -6,7 +6,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Seguridad
 SECRET_KEY = 'ytj5ars5xlyaw9sd6t8uoc-^f5=)6p4!j_j2jnffc08xf@+3zd'
 DEBUG = True
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '.onrender.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'gieapp.onrender.com']
+CSRF_TRUSTED_ORIGINS = ['https://gieapp.onrender.com']
+
 
 # Aplicaciones
 INSTALLED_APPS = [
