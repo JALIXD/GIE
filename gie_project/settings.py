@@ -96,11 +96,10 @@ WSGI_APPLICATION = 'gie_project.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.getenv("postgresql://gie_db_user:aVhdKpVGwwUCJIZV8C9kRed2tekPT1ag@dpg-d13dmfjipnbc73b70shg-a/gie_db"),
+        default=os.getenv("DATABASE_URL"),
         conn_max_age=600
     )
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
