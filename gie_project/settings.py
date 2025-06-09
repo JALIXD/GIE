@@ -96,7 +96,7 @@ WSGI_APPLICATION = 'gie_project.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default='mysql://gie_user:gie_pass@db:3306/gie_db',
+        default=os.getenv("postgresql://gie_db_user:aVhdKpVGwwUCJIZV8C9kRed2tekPT1ag@dpg-d13dmfjipnbc73b70shg-a/gie_db"),
         conn_max_age=600
     )
 }
