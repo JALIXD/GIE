@@ -1,1 +1,27 @@
-clea
+version: '3.9'
+
+services:
+  web:
+    build: .
+    command: gunicorn gie_project.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: gie_db
+      MYSQL_USER: gie_user
+      MYSQL_PASSWORD: gie_pass
+      MYSQL_ROOT_PASSWORD: rootpass
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
