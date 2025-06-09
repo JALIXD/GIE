@@ -1,5 +1,9 @@
 FROM python:3.11-slim
 
+ENV PYTHONUNBUFFERED=1
+ENV DJANGO_SETTINGS_MODULE=gie_project.settings
+ENV DEBUG=False
+
 WORKDIR /app
 
 COPY requirements.txt .

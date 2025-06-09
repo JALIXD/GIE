@@ -14,6 +14,8 @@ from pathlib import Path
 import pymysql
 import os
 import dj_database_url 
+from dotenv import load_dotenv
+load_dotenv()
 
 pymysql.install_as_MySQLdb()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -31,6 +33,8 @@ DEBUG = os.getenv("DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost','.onrender.com']
 
+
+STATICFILES_DIRS = [BASE_DIR / 'gie_project' / 'static']
 
 # Application definition
 
