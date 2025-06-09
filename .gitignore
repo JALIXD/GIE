@@ -1,0 +1,22 @@
+# Entorno virtual
+env/
+venv/
+
+# Archivos compilados
+__pycache__/
+*.py[cod]
+
+# Archivos de entorno
+.env
+
+# Archivos de migración cacheados
+**/migrations/*.pyc
+**/migrations/__pycache__/
+
+# Archivos estáticos recolectados
+/staticfiles/
+
+# Archivos temporales o duplicados
+*.DS_Store
+* 2.py
+* 2.html
