@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block title %}Reservas de {{ mesa.nombre }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2 class="fw-bold mb-3">Reservas  {{ mesa.nombre }}</h2>
+    <!-- Filtro -->
+    <form method="get" class="row g-3 mb-4">
+      <div class="col-md-4">
+        <label class="form-label">Filtrar por fecha</label>
+        <input type="date" name="fecha" value="{{ fecha }}" class="form-control">
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">Buscar por cliente</label>
+        <input type="text" name="cliente" value="{{ cliente }}" class="form-control" placeholder="Nombre del cliente">
+      </div>
+      <div class="col-md-4 d-flex align-items-end">
+        <button type="submit" class="btn btn-primary me-2">Filtrar</button>
+        <a href="{% url 'ver_reservas_mesa_usuario' mesa.id %}" class="btn btn-outline-secondary">Limpiar</a>
+      </div>
+    </form>
+
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+
+  {% if reservas %}
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead class="table-dark">
+          <tr>
+            <th>Fecha</th>
+            <th>Horario</th>
+            <th>Cliente</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for reserva in reservas %}
+            <tr>
+              <td>{{ reserva.fecha_reserva|date:"d/m/Y" }}</td>
+              <td>{{ reserva.franja.hora_inicio|time:"H:i" }} - {{ reserva.franja.hora_fin|time:"H:i" }}</td>
+              <td>{{ reserva.cliente }}</td>
+              <td>
+                {% if reserva.usuario_asignado == user %}
+                  <form method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <input type="hidden" name="reserva_id" value="{{ reserva.id }}">
+                    <button type="submit" class="btn btn-sm btn-danger">Cancelar</button>
+                  </form>
+                {% else %}
+                  <span class="text-muted">-</span>
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="alert alert-info">No hay reservas registradas para esta mesa.</div>
+  {% endif %}
+
+  <a href="{% url 'usuario_listar_mesas' %}" class="btn btn-secondary mt-3">Volver</a>
+</div>
+{% endblock %}

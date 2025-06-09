@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}Clientes{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold">📋 Lista de Clientes</h2>
+    <a href="{% url 'crear_cliente' %}" class="btn btn-primary"> Nuevo Cliente</a>
+  </div>
+
+  {% if clientes %}
+    <table class="table table-bordered table-striped">
+      <thead class="table-dark">
+        <tr>
+          <th>Nombre</th>
+          <th>Email</th>
+          <th>Teléfono</th>
+          <th>Dirección</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for cliente in clientes %}
+          <tr>
+            <td>{{ cliente.nombre }}</td>
+            <td>{{ cliente.email }}</td>
+            <td>{{ cliente.telefono }}</td>
+            <td>{{ cliente.direccion }}</td>
+            <td class="d-flex gap-2">
+              <a href="{% url 'editar_cliente' cliente.id %}" class="btn btn-sm btn-warning">✏️ Editar</a>
+              <form action="{% url 'eliminar_cliente' cliente.id %}" method="post" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este cliente?');">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-danger">🗑️ Eliminar</button>
+              </form>
+              <a href="{% url 'compras_cliente' cliente.id %}" class="btn btn-sm btn-info text-white">🛒 Ver compras</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <div class="alert alert-info">No hay clientes registrados.</div>
+  {% endif %}
+</div>
+{% endblock %}

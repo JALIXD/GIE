@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block title %}Reservas de {{ mesa.nombre }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2 class="fw-bold mb-3">Reservas de {{ mesa.nombre }}</h2>
+
+  <!-- Filtros -->
+  <form method="get" class="row g-3 mb-4">
+    <div class="col-md-4">
+      <label class="form-label">Filtrar por fecha</label>
+      <input type="date" name="fecha" value="{{ fecha }}" class="form-control">
+    </div>
+    <div class="col-md-4">
+      <label class="form-label">Buscar por cliente</label>
+      <input type="text" name="cliente" value="{{ cliente }}" class="form-control" placeholder="Nombre del cliente">
+    </div>
+    <div class="col-md-4 d-flex align-items-end">
+      <button type="submit" class="btn btn-primary me-2">Filtrar</button>
+      <a href="{% url 'ver_reservas_mesa' mesa.id %}" class="btn btn-outline-secondary">Limpiar</a>
+    </div>
+  </form>
+
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+
+  {% if reservas %}
+    <div class="table-responsive">
+      <table class="table table-striped align-middle">
+        <thead class="table-dark">
+          <tr>
+            <th>Fecha reservada</th>
+            <th>Horario</th>
+            <th>Cliente</th>
+            <th>Reservado por</th>
+            <th class="text-center">Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for reserva in reservas %}
+          <tr>
+            <td>{{ reserva.fecha_reservada|date:"d/m/Y" }}</td>
+            <td>{{ reserva.franja.hora_inicio|time:"H:i" }} - {{ reserva.franja.hora_fin|time:"H:i" }}</td>
+            <td>{{ reserva.cliente }}</td>
+            <td>{{ reserva.usuario_asignado.username }}</td>
+            <td class="text-center">
+              <a href="{% url 'eliminar_reserva' reserva.id %}" class="btn btn-sm btn-outline-danger" onclick="return confirm('¿Eliminar esta reserva?')">Eliminar</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="alert alert-info">No hay reservas para esta mesa.</div>
+  {% endif %}
+
+  <a href="{% url 'listar_mesas' %}" class="btn btn-secondary mt-3">← Volver</a>
+</div>
+{% endblock %}

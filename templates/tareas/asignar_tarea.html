@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Asignar tarea{% endblock %}
+{% block content %}
+<h1 class="mb-4">Asignar nueva tarea a {{ usuario.username }}</h1>
+
+<form method="post" class="card p-4 shadow-sm">
+  {% csrf_token %}
+  
+  <div class="mb-3">
+    {{ form.titulo.label_tag }} {{ form.titulo }}
+  </div>
+  <div class="mb-3">
+    {{ form.descripcion.label_tag }} {{ form.descripcion }}
+  </div>
+  <div class="mb-3">
+    {{ form.fecha_limite.label_tag }} {{ form.fecha_limite }}
+  </div>
+  
+  <button type="submit" class="btn btn-primary">Guardar</button>
+</form>
+{% endblock %}

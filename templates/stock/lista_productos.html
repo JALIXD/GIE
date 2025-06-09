@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block title %}Stock de Productos{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2 class="fw-bold mb-4">📦 Productos en Stock</h2>
+
+  <!-- Filtros -->
+  <form method="get" class="row g-3 mb-4">
+    <div class="col-md-3">
+      <input type="text" name="nombre" value="{{ nombre }}" placeholder="🔍 Buscar por nombre" class="form-control" />
+    </div>
+    <div class="col-md-3">
+      <select name="categoria" class="form-select">
+        <option value="">Todas las categorías</option>
+        {% for cat in categorias %}
+          <option value="{{ cat.id }}" {% if cat.id|stringformat:"s" == categoria_id %}selected{% endif %}>{{ cat.nombre }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-3">
+      <select name="proveedor" class="form-select">
+        <option value="">Todos los proveedores</option>
+        {% for prov in proveedores %}
+          <option value="{{ prov.id }}" {% if prov.id|stringformat:"s" == proveedor_id %}selected{% endif %}>{{ prov.nombre }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-2">
+      <input type="date" name="fecha" value="{{ fecha }}" class="form-control" />
+    </div>
+    <div class="col-md-1 d-flex gap-1">
+      <button type="submit" class="btn btn-outline-primary w-100">Filtrar</button>
+      <a href="{% url 'lista_productos' %}" class="btn btn-outline-secondary w-100">Limpiar</a>
+    </div>
+  </form>
+
+  <!-- Acciones del administrador -->
+  {% if user.rol == "admin" %}
+  <div class="mb-4 d-flex flex-wrap gap-2">
+    <a href="{% url 'crear_producto' %}" class="btn btn-primary">Nuevo Producto</a>
+    <a href="{% url 'crear_proveedor' %}" class="btn btn-primary">Añadir Proveedor</a>
+    <a href="{% url 'notificar_stock' %}" class="btn btn-primary">Notificar Stock Bajo</a>
+    <a href="{% url 'crear_categoria' %}" class="btn btn-primary">Añadir Categoría</a>
+  </div>
+  {% endif %}
+
+  <!-- Tabla de productos -->
+  <div class="table-responsive">
+    <table class="table table-hover table-bordered align-middle">
+      <thead class="table-dark">
+        <tr>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Categoría</th>
+          <th>Proveedor</th>
+          <th>Stock</th>
+          <th>Stock Mínimo</th>
+          <th>Precio</th>
+          {% if user.rol == "admin" %}
+            <th>Acciones</th>
+          {% endif %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for producto in productos %}
+        <tr class="{% if producto.stock_bajo %}table-danger{% endif %}">
+          <td>{{ producto.nombre }}</td>
+          <td>{{ producto.descripcion|truncatechars:40 }}</td>
+          <td>{{ producto.categoria }}</td>
+          <td>{{ producto.proveedor }}</td>
+          <td>{{ producto.cantidad_stock }}</td>
+          <td>{{ producto.stock_minimo }}</td>
+          <td>{{ producto.precio }} €</td>
+          {% if user.rol == "admin" %}
+          <td>
+            <a href="{% url 'editar_producto' producto.id %}" class="btn btn-sm btn-outline-primary">✏️ Editar</a>
+            <a href="{% url 'eliminar_producto' producto.id %}" class="btn btn-sm btn-outline-danger" onclick="return confirm('¿Eliminar este producto?')">🗑️ Eliminar</a>
+          </td>
+          {% endif %}
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="8" class="text-center">No hay productos registrados.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Tarea: {{ tarea.titulo }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2>{{ tarea.titulo }}</h2>
+  <p><strong>Descripción:</strong> {{ tarea.descripcion }}</p>
+  <p><strong>Fecha límite:</strong> {{ tarea.fecha_limite }}</p>
+  <p><strong>Estado:</strong>
+    {% if tarea.completada %}
+      <span class="badge bg-success">Completada</span>
+    {% else %}
+      <span class="badge bg-warning text-dark">Pendiente</span>
+    {% endif %}
+  </p>
+
+  <form method="post" action="{% url 'toggle_completada' tarea.id %}">
+    {% csrf_token %}
+    {% if tarea.completada %}
+      <button type="submit" class="btn btn-warning">❌ Marcar como pendiente</button>
+    {% else %}
+      <button type="submit" class="btn btn-success">✔️ Marcar como completada</button>
+    {% endif %}
+  </form>
+
+  <a href="{% url 'tareas_usuario' %}" class="btn btn-secondary mt-3">⬅ Volver a mis tareas</a>
+</div>
+{% endblock %}

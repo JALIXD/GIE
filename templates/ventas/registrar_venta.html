@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}Registrar Venta{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2>Registrar Venta</h2>
+  <form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="tipo" class="form-label">Tipo de venta</label>
+      <select name="tipo" id="tipo" class="form-select" required>
+        <option value="">-- Seleccionar tipo --</option>
+        {% for t in tipos %}
+          <option value="{{ t.id }}">{{ t.nombre }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="categoria" class="form-label">Categoría</label>
+      <select name="categoria" id="categoria" class="form-select">
+        <option value="">-- Sin categoría --</option>
+        {% for c in categorias %}
+          <option value="{{ c.id }}">{{ c.nombre }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="cantidad" class="form-label">Cantidad (€)</label>
+      <input type="number" name="cantidad" id="cantidad" step="0.01" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="comentario" class="form-label">Comentario</label>
+      <textarea name="comentario" id="comentario" class="form-control"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Registrar</button>
+  </form>
+</div>
+{% endblock %}

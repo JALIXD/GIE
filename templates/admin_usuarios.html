@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}Gestión de Usuarios{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <h1 class="mb-4 fw-bold">Gestión de Usuarios</h1>
+
+  <table class="table table-hover align-middle">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Rol</th>
+        <th class="text-center">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for usuario in usuarios %}
+      <tr>
+        <td>{{ usuario.id }}</td>
+        <td>{{ usuario.get_full_name|default:usuario.username }}</td>
+        <td>{{ usuario.email }}</td>
+        <td>{{ usuario.rol }}</td>
+        <td class="text-center">
+          <a href="{% url 'ver_horas_usuario' usuario.id %}" class="btn btn-sm btn-outline-primary me-1">Ver horas</a>
+          <a href="{% url 'editar_usuario' usuario.id %}" class="btn btn-sm btn-outline-warning me-1">Editar</a>
+          <a href="{% url 'asignar_tareas' usuario.id %}" class="btn btn-sm btn-outline-success">Asignar tareas</a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="5" class="text-center">No hay usuarios registrados.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

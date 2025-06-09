@@ -1,0 +1,38 @@
+<nav class="navbar navbar-expand-lg navbar-custom position-relative shadow-sm py-2">
+  <div class="container-fluid justify-content-center position-relative">
+
+    <!-- Toggler a la izquierda -->
+    <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarBasico">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Logo centrado -->
+    <a class="navbar-brand mx-auto text-white fw-bold fs-4 text-decoration-none" href="/">
+      GIE<span class="navbar-role d-block small fw-light">Gestión Inteligente</span>
+    </a>
+
+    <!-- Botón de sesión a la derecha -->
+    <div class="position-absolute top-0 end-0 pe-2 pt-2">
+      <a href="{% url 'login' %}" class="btn btn-sm btn-outline-light rounded-pill">Iniciar sesión</a>
+    </div>
+
+    <!-- Menú de navegación -->
+    <div class="collapse navbar-collapse mt-3 mt-lg-0" id="navbarBasico">
+      <ul class="navbar-nav justify-content-center mx-auto">
+        <li class="nav-item">
+          <a class="nav-link text-white px-3" href="/">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white px-3" href="{% url 'about' %}">Acerca de</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white px-3" href="/precios/">Precios</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white px-3" href="/soporte/">Soporte</a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</nav>

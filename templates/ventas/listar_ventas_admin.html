@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% block title %}Listado de Ventas{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2>Ventas Registradas</h2>
+  
+  <div class="mb-4 d-flex flex-wrap gap-2">
+    <!-- Tipos de Venta -->
+    <a href="{% url 'crear_tipo_venta' %}" class="btn btn-primary ">Crear Tipo de Venta</a>
+    <a href="{% url 'listar_tipos_venta' %}" class="btn btn-primary ">Editar Tipos</a>
+     
+    <!-- Ventas -->
+    <a href="{% url 'crear_venta_admin' %}" class="btn btn-primary ">Registrar Venta</a>
+  </div>
+  
+  
+
+
+  <!-- Filtros -->
+  <form method="get" class="row g-3 mb-4">
+    <div class="col-md-2">
+      <label for="usuario" class="form-label">Usuario</label>
+      <select name="usuario" id="usuario" class="form-select">
+        <option value="">Todos</option>
+        {% for u in usuarios %}
+          <option value="{{ u.id }}" {% if filtros.usuario == u.id|stringformat:"s" %}selected{% endif %}>
+            {{ u.username }}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="col-md-2">
+      <label for="tipo" class="form-label">Tipo</label>
+      <select name="tipo" id="tipo" class="form-select">
+        <option value="">Todos</option>
+        {% for t in tipos %}
+          <option value="{{ t.id }}" {% if filtros.tipo == t.id|stringformat:"s" %}selected{% endif %}>
+            {{ t.nombre }}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="col-md-2">
+      <label for="categoria" class="form-label">Categoría</label>
+      <select name="categoria" id="categoria" class="form-select">
+        <option value="">Todas</option>
+        {% for c in categorias %}
+          <option value="{{ c.id }}" {% if filtros.categoria == c.id|stringformat:"s" %}selected{% endif %}>
+            {{ c.nombre }}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="col-md-2">
+      <label class="form-label">Desde</label>
+      <input type="date" name="desde" value="{{ filtros.desde }}" class="form-control">
+    </div>
+
+    <div class="col-md-2">
+      <label class="form-label">Hasta</label>
+      <input type="date" name="hasta" value="{{ filtros.hasta }}" class="form-control">
+    </div>
+
+    <div class="col-md-2 d-flex align-items-end">
+      <button type="submit" class="btn btn-secondary w-100">Filtrar</button>
+    </div>
+  </form>
+
+  <!-- Exportar -->
+  <div class="mb-3">
+    <a href="{% url 'exportar_pdf' %}?usuario={{ filtros.usuario }}&tipo={{ filtros.tipo }}&categoria={{ filtros.categoria }}&desde={{ filtros.desde }}&hasta={{ filtros.hasta }}" class="btn btn-danger">
+      📄 Exportar PDF
+    </a>
+  </div>
+
+  <!-- Tabla de ventas -->
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered">
+      <thead class="table-dark">
+        <tr>
+          <th>ID</th>
+          <th>Usuario</th>
+          <th>Tipo</th>
+          <th>Categoría</th>
+          <th>Cantidad</th>
+          <th>Precio Unitario (€)</th>
+          <th>Comentario</th>
+          <th>Fecha</th>
+          <th>Total (€)</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for venta in ventas %}
+        <tr onclick="window.location.href='{% url 'editar_venta' venta.id %}'" style="cursor:pointer;">
+          <td>{{ venta.id }}</td>
+          <td>{{ venta.usuario.username }}</td>
+          <td>{{ venta.tipo.nombre }}</td>
+          <td>{{ venta.producto.categoria.nombre }}</td>
+          <td>{{ venta.cantidad }}</td>
+          <td>{{ venta.precio_unitario|floatformat:2 }}</td>
+          <td>{{ venta.comentario }}</td>
+          <td>{{ venta.fecha|date:"d/m/Y H:i" }}</td>
+          <td>{{ venta.total|floatformat:2 }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="9" class="text-center">No hay ventas que coincidan.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      
+    </table>
+  </div>
+
+  <!-- Total general -->
+  <div class="alert alert-info text-end mt-3">
+    
+    <strong>Total general:</strong> {{ total_ventas|floatformat:2 }} €
+  </div>
+</div>
+{% endblock %}

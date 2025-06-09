@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Soporte Técnico{% endblock %}
+
+{% block content %}
+<section class="py-5 ">
+  <div class="container">
+    <h2 class="text-center fw-bold mb-4 text-dark">Centro de Soporte GIE</h2>
+    <p class="text-center text-muted mb-5">¿Tienes dudas, incidencias o sugerencias? Estamos aquí para ayudarte.</p>
+
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="card border-0 shadow-sm p-4 bg-white">
+
+          <h4 class="fw-semibold mb-3">Contacto directo</h4>
+          <div class="mb-4">
+            <p class="mb-1"><strong>Email:</strong> <a href="mailto:soporte@gieapp.com">soporte@gieapp.com</a></p>
+            <p class="mb-1"><strong>Teléfono:</strong> <a href="tel:617651107">617 651 107</a></p>
+            <p class="mb-0"><strong>Horario de atención:</strong> Lunes a Viernes de 9:00 a 18:00</p>
+          </div>
+
+          {% if mensaje_enviado %}
+            <div class="alert alert-success" role="alert">
+              Tu mensaje ha sido enviado con éxito. Te responderemos lo antes posible.
+            </div>
+          {% endif %}
+
+          <h5 class="fw-semibold mb-3 mt-4">Formulario de contacto</h5>
+          <form method="post" novalidate>
+            {% csrf_token %}
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" required>
+              </div>
+              <div class="col-md-6">
+                <label for="email" class="form-label">Correo electrónico</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+              </div>
+              <div class="col-12">
+                <label for="mensaje" class="form-label">Mensaje</label>
+                <textarea class="form-control" id="mensaje" name="mensaje" rows="5" required></textarea>
+              </div>
+            </div>
+            <div class="text-end mt-4">
+              <button type="submit" class="btn btn-primary px-4">Enviar mensaje</button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

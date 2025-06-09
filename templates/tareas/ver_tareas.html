@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Tareas de {{ usuario.username }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2 class="mb-4">Tareas asignadas a {{ usuario.username }}</h2>
+
+  {% if tareas %}
+    <ul class="list-group">
+      {% for tarea in tareas %}
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+          <div>
+            <strong>{{ tarea.titulo }}</strong> – {{ tarea.descripcion }}<br>
+            Estado: {{ tarea.completada|yesno:"Completada,Pendiente" }}
+          </div>
+          <div class="d-flex gap-2">
+            <a href="{% url 'editar_tarea' tarea.id %}" class="btn btn-sm btn-warning">✏️ Editar</a>
+            <form action="{% url 'eliminar_tarea' tarea.id %}" method="post" onsubmit="return confirm('¿Estás seguro de que quieres eliminar esta tarea?');">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-sm btn-danger">🗑️ Eliminar</button>
+            </form>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <div class="alert alert-info mt-3">No hay tareas asignadas.</div>
+  {% endif %}
+</div>
+{% endblock %}

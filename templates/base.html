@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}GIE - Gestión Empresarial{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load static %}
+    <!-- CSS de Select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'style.css' %}">    
+    {% block extra_head %}{% endblock %}
+</head>
+
+<!-- ⬇️ Cambios clave aquí -->
+<body class="d-flex flex-column min-vh-100">
+
+    {% if request.user.is_authenticated %}
+        {% if request.user.rol == 'admin' %}
+            {% include 'header_admin.html' %}
+        {% else %}
+            {% include 'header_usuario.html' %}
+        {% endif %}
+    {% else %}
+        {% include 'header_basico.html' %}
+    {% endif %}
+
+    <!-- ⬇️ Este main debe tener flex-grow para empujar el footer -->
+    <main class="container mt-4 flex-grow-1">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    {% include 'footer.html' %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- JS de Select2 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+    $(document).ready(function () {
+        $('#productoSelect').select2({
+        placeholder: 'Buscar producto...',
+        width: '100%'
+        });
+    });
+    </script>
+
+</body>
+</html>

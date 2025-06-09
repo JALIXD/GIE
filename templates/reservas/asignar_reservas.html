@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Asignar Reservas{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2>Asignar Reservas - {{ mesa.nombre }} ({{ dia_semana }})</h2>
+  <form method="post">
+    {% csrf_token %}
+    <table class="table table-striped mt-4">
+      <thead>
+        <tr>
+          <th>Hora</th>
+          <th>Cliente</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for franja in franjas %}
+        <tr>
+          <td>{{ franja.hora_inicio|time:"H:i" }} - {{ franja.hora_fin|time:"H:i" }}</td>
+          <td>
+            <input type="text" name="cliente_{{ franja.id }}" class="form-control" placeholder="Nombre del cliente">
+          </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="2" class="text-center">No hay franjas disponibles.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <button type="submit" class="btn btn-success">Guardar Reservas</button>
+    <a href="{% url 'listar_mesas' %}" class="btn btn-secondary">Volver</a>
+  </form>
+</div>
+{% endblock %}

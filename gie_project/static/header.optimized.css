@@ -1,0 +1,106 @@
+.navbar-custom {
+    background-color: #11212D;
+    padding: 0.8rem 1.2rem;
+  }
+  
+  .navbar-brand {
+    color: white;
+    font-weight: 700;
+    font-size: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .navbar-role {
+    font-size: 0.75rem;
+    color: #cbd5e1;
+    font-weight: 400;
+    margin-top: -4px;
+  }
+  
+  .navbar-toggler {
+    border: none;
+    position: absolute;
+    left: 1rem;
+    top: 0.9rem;
+    z-index: 1040;
+  }
+  
+  .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+  }
+  
+  .nav-link {
+    color: white !important;
+    font-weight: 500;
+    font-size: 1.05rem;
+    transition: 0.2s ease-in-out;
+    padding: 0.5rem 1rem;
+  }
+  
+  .nav-link:hover {
+    color: #ffcc00 !important;
+  }
+  
+  .avatar {
+    font-size: 1.5rem;
+    background-color: #ffffff33;
+    border-radius: 50%;
+    padding: 0.4rem;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+  }
+  
+  .navbar-collapse {
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .navbar-nav {
+    flex-direction: column;
+  }
+  
+  .navbar-end {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+  
+  /* Responsive Desktop */
+  @media (min-width: 992px) {
+    .navbar-brand {
+      flex-direction: row;
+      gap: 0.5rem;
+    }
+  
+    .navbar-collapse {
+      justify-content: center;
+    }
+  
+    .navbar-nav {
+      flex-direction: row;
+    }
+  
+    .nav-link {
+      margin: 0 0.75rem;
+    }
+  
+    .navbar-end {
+      position: absolute;
+      right: 1.5rem;
+      margin-top: 0;
+    }
+  
+    .navbar-toggler {
+      position: static;
+      margin-left: auto;
+    }
+  }
+
+  

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Categorías de Venta{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2>Editar Categorías</h2>
+
+  <div class="mb-3">
+    <a href="{% url 'crear_categoria' %}" class="btn btn-primary">Crear Nueva Categoría</a>
+    <a href="{% url 'listar_ventas_admin' %}" class="btn btn-primary">Volver</a>
+  </div>
+
+  <table class="table table-bordered table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for categoria in categorias %}
+      <tr>
+        <td>{{ categoria.id }}</td>
+        <td>{{ categoria.nombre }}</td>
+        <td>{{ categoria.descripcion }}</td>
+        <td>
+          <a href="{% url 'editar_categoria' categoria.id %}" class="btn btn-sm btn-warning">✏️ Editar</a>
+          <a href="{% url 'eliminar_categoria' categoria.id %}" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de eliminar esta categoría?')">🗑️ Eliminar</a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="4" class="text-center">No hay categorías registradas.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

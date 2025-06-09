@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}Panel de Administración{% endblock %}
+
+{% block content %}
+<div class="admin-dashboard container text-center mt-1">
+  <h1 class="fw-bold mb-3 display-5">¡Bienvenido, {{ request.user.username }}! 👨‍💼</h1>
+  <p class="lead mb-5 text-muted">Gestiona y supervisa los aspectos clave de la empresa</p>
+
+  <div class="row g-4 justify-content-center">
+    <div class="col-md-6 col-lg-4">
+      <a href="{% url 'listar_usuarios' %}" class="dashboard-card">
+        <div class="icon">👥</div>
+        <h5>Gestión de Empleados</h5>
+        <p>Control de asistencia, horarios, tareas y desempeño</p>
+      </a>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+      <a href="{% url 'listar_ventas_admin' %}" class="dashboard-card">
+        <div class="icon">📊</div>
+        <h5>Control de Ventas</h5>
+        <p>Monitorea ventas, ingresos y estadísticas comerciales</p>
+      </a>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+      <a href="{% url 'lista_productos' %}" class="dashboard-card">
+        <div class="icon">📦</div>
+        <h5>Gestión de Stock</h5>
+        <p>Revisa existencias, productos y alertas de inventario</p>
+      </a>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+      <a href="/clientes/" class="dashboard-card">
+        <div class="icon">🧑‍💼</div>
+        <h5>Clientes</h5>
+        <p>Consulta la base de datos de clientes y fidelización</p>
+      </a>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+      <a href="{% url 'listar_mesas' %}" class="dashboard-card">
+        <div class="icon">📅</div>
+        <h5>Reservas</h5>
+        <p>Gestiona las reservas de servicios o productos</p>
+      </a>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+      <a href="{% url 'fichaje' %}" class="dashboard-card">
+        <div class="icon">🕒</div>
+        <h5>Fichaje</h5>
+        <p>Registra entrada y salida del personal</p>
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

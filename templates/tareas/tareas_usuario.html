@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}Mis Tareas{% endblock %}
+
+{% block content %}
+{% now "Y-m-d" as today %}
+
+<div class="container mt-4">
+  <h2 class="mb-4">📋 Mis Tareas</h2>
+
+  {% if tareas %}
+    <div class="mb-4">
+      <h5>Progreso semanal</h5>
+      <div class="progress">
+        <div class="progress-bar bg-success" style="width: {{ porcentaje }}%;">
+          {{ porcentaje }}%
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  <ul class="list-group">
+    {% for tarea in tareas %}
+      <li class="list-group-item position-relative
+        {% if tarea.completada %}
+          list-group-item-success
+        {% elif tarea.fecha_limite|stringformat:"Y-m-d" < today %}
+          list-group-item-danger
+        {% endif %}">
+
+        <div class="d-flex justify-content-between align-items-center position-relative" style="z-index: 10;">
+          <div>
+            <h5 class="mb-1">{{ tarea.titulo }}</h5>
+            <small class="text-muted">Límite: {{ tarea.fecha_limite }}</small>
+          </div>
+
+          <form method="post" action="{% url 'toggle_completada' tarea.id %}" class="ms-3">
+            {% csrf_token %}
+            {% if not tarea.completada %}
+              <button type="submit" class="btn btn-sm btn-outline-success">✔️</button>
+            {% else %}
+              <button type="submit" class="btn btn-sm btn-warning">❌</button>
+            {% endif %}
+          </form>
+        </div>
+
+        <a href="{% url 'detalle_tarea' tarea.id %}"
+           class="stretched-link"
+           style="z-index: 5; position: absolute; inset: 0;"></a>
+
+      </li>
+    {% empty %}
+      <li class="list-group-item">No tienes tareas asignadas.</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

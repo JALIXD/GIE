@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block title %}Mis Reservas{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold">📅 Mis Reservas</h2>
+  </div>
+
+  <!-- Filtros -->
+  <form method="get" class="row g-3 align-items-end mb-4">
+    <div class="col-md-4">
+      <label for="mesa" class="form-label">Filtrar por Mesa</label>
+      <select class="form-select" name="mesa" id="mesa">
+        <option value="">Todas las mesas</option>
+        {% for mesa_opcion in mesas %}
+          <option value="{{ mesa_opcion.id }}" {% if request.GET.mesa == mesa_opcion.id|stringformat:"s" %}selected{% endif %}>
+            {{ mesa_opcion.nombre }}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="col-md-4">
+      <label for="fecha" class="form-label">Filtrar por Fecha</label>
+      <input type="date" name="fecha" id="fecha" class="form-control" value="{{ request.GET.fecha }}">
+    </div>
+
+    <div class="col-md-4">
+      <label for="cliente" class="form-label">Buscar por Cliente</label>
+      <input type="text" name="cliente" id="cliente" class="form-control" placeholder="Nombre del cliente" value="{{ request.GET.cliente }}">
+    </div>
+
+    <div class="col-12 d-flex justify-content-end gap-2">
+      <a href="{% url 'usuario_ver_reservas' %}" class="btn btn-secondary">Limpiar</a>
+      <button type="submit" class="btn btn-primary">Filtrar</button>
+    </div>
+  </form>
+
+  <!-- Tabla -->
+  {% if reservas %}
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered align-middle">
+        <thead class="table-dark">
+          <tr>
+            <th>Mesa</th>
+            <th>Fecha</th>
+            <th>Día</th>
+            <th>Horario</th>
+            <th>Cliente</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for reserva in reservas %}
+            <tr>
+              <td>{{ reserva.mesa.nombre }}</td>
+              <td>{{ reserva.fecha_reservada|date:"d/m/Y" }}</td>
+              <td>{{ reserva.franja.dia_semana }}</td>
+              <td>{{ reserva.franja.hora_inicio }} - {{ reserva.franja.hora_fin }}</td>
+              <td>{{ reserva.cliente }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="alert alert-info">No tienes reservas realizadas.</div>
+  {% endif %}
+</div>
+{% endblock %}

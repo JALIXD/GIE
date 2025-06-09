@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}Panel Usuario{% endblock %}
+
+{% block content %}
+<section class="dashboard">
+  <h1>Bienvenido, {{ request.user.username }}</h1>
+  <p class="lead">Accede a las funcionalidades y herramientas que necesitas</p>
+
+  <!-- Widget de progreso -->
+  {% if total > 0 %}
+    <div class="progress-widget mt-4 mb-5">
+      <h5>📊 Progreso Total de Tareas</h5>
+      <div class="progress" style="height: 24px;">
+        <div class="progress-bar bg-success fw-bold progress-bar-striped progress-bar-animated"
+            role="progressbar"
+            style="width: {{ porcentaje }}%;"
+            aria-valuenow="{{ porcentaje }}" aria-valuemin="0" aria-valuemax="100">
+          {{ porcentaje }}%
+        </div>
+      </div>
+      <p class="text-muted mt-2">{{ completadas }} completadas de {{ total }} tareas asignadas</p>
+    </div>
+  {% endif %}
+
+  <div class="grid">
+    <div class="card">
+      <div class="icon">🕒</div>
+      <h5>Fichar</h5>
+      <p>Registra tu entrada y salida diaria</p>
+      <a href="{% url 'fichaje' %}" class="btn btn-primary">Registrar</a>
+    </div>
+
+    <div class="card">
+      <div class="icon">📝</div>
+      <h5>Tareas</h5>
+      <p>Revisa y gestiona tus tareas asignadas</p>
+      <a href="{% url 'tareas_usuario' %}" class="btn btn-primary">Ver Tareas</a>
+    </div>
+
+    <div class="card">
+      <div class="icon">🍽️</div>
+      <h5>Reservas</h5>
+      <p>Haz una reserva en el comedor</p>
+      <a href="{% url 'usuario_listar_mesas' %}" class="btn btn-primary">Reservar</a>
+    </div>
+
+    <div class="card">
+      <div class="icon">🤝</div>
+      <h5>Ventas</h5>
+      <p>Asigna ventas realizadas a clientes</p>
+      <a href="{% url 'asignar_venta_usuario' %}" class="btn btn-primary">Asignar Venta</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

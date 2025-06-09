@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}Reservar Mesa{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2 class="fw-bold mb-3">Reservar en "{{ mesa.nombre }}"</h2>
+
+  <form method="post">
+    {% csrf_token %}
+    <input type="hidden" name="mesa_id" value="{{ mesa.id }}">
+
+    <!-- Fecha -->
+    <div class="mb-3">
+      <label for="fecha" class="form-label">Selecciona la fecha</label>
+      <input type="date" name="fecha" id="fecha" class="form-control" value="{{ fecha_actual }}" required onchange="this.form.submit()">
+    </div>
+
+    {% if dia_semana %}
+      <!-- Franja horaria -->
+      <div class="mb-3">
+        <label for="franja_id" class="form-label">Franja Horaria</label>
+        <select name="franja_id" id="franja_id" class="form-select" required>
+          <option value="" disabled selected>Seleccione una franja</option>
+          {% for franja in franjas %}
+            <option value="{{ franja.id }}">{{ franja.hora_inicio }} - {{ franja.hora_fin }}</option>
+          {% empty %}
+            <option disabled>No hay franjas disponibles para este día.</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <!-- Cliente -->
+      <div class="mb-3">
+        <label for="cliente" class="form-label">Nombre del Cliente</label>
+        <input type="text" name="cliente" id="cliente" class="form-control" required>
+      </div>
+
+      <div class="d-flex justify-content-between">
+        <a href="{% url 'listar_mesas' %}" class="btn btn-secondary">Cancelar</a>
+        <button type="submit" class="btn btn-primary">Reservar</button>
+        {% if not user.is_authenticated %}
+          <div class="alert alert-warning">
+            Debes <a href="{% url 'login' %}">iniciar sesión</a> para hacer una reserva.
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+  </form>
+</div>
+{% endblock %}

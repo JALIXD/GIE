@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block title %}Gestión de Empleados{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="fw-bold">Gestión de Empleados</h1>
+    <div class="d-flex gap-2">
+      <a href="{% url 'crear_usuario' %}" class="btn btn-success">Añadir Usuario</a>
+      <button class="btn btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#filtroPanel">Filtrar</button>
+    </div>
+  </div>
+
+  <div class="collapse mb-4" id="filtroPanel">
+    <div class="card card-body shadow-sm">
+      <form method="get" class="row g-2 align-items-end">
+        <div class="col-md-4">
+          <label class="form-label">Buscar</label>
+          <input type="text" name="q" class="form-control" placeholder="Buscar..." value="{{ q }}">
+        </div>
+      
+        <div class="col-md-4">
+          <label class="form-label">Rol</label>
+          <select name="rol" class="form-select">
+            <option value="">Todos los roles</option>
+            <option value="admin" {% if rol == 'admin' %}selected{% endif %}>Administrador</option>
+            <option value="usuario" {% if rol == 'usuario' %}selected{% endif %}>Empleado</option>
+          </select>
+        </div>
+      
+        <div class="col-md-4 d-flex gap-2">
+          <button type="submit" class="btn w-100 btn-primary">Aplicar Filtros</button>
+          <a href="{% url 'listar_usuarios' %}" class="btn w-100 btn-primary">Limpiar</a>
+        </div>
+      </form>
+      
+      
+    </div>
+  </div>
+
+  {% if usuarios %}
+    <div class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead class="table-dark">
+          <tr>
+            <th>Usuario</th>
+            <th>Rol</th>
+            <th>Email</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for usuario in usuarios %}
+            <tr>
+              <td>{{ usuario.get_full_name|default:usuario.username }}</td>
+              <td>{{ usuario.rol|title }}</td>
+              <td>{{ usuario.email }}</td>
+              <td>
+                <div class="d-flex flex-wrap gap-2">
+                  <a href="{% url 'ver_tareas_usuario' usuario.id %}" class="btn btn-outline-primary btn-sm">Tareas</a>
+                  <a href="{% url 'asignar_tarea' usuario.id %}" class="btn btn-outline-success btn-sm">Asignar</a>
+                  <a href="{% url 'ver_horas_usuario' usuario.id %}" class="btn btn-outline-info btn-sm">Horas</a>
+                  <a href="{% url 'editar_usuario' usuario.id %}" class="btn btn-outline-warning btn-sm">Editar</a>
+                  <a href="{% url 'eliminar_usuario' usuario.id %}" class="btn btn-outline-danger btn-sm"
+                     onclick="return confirm('¿Eliminar este usuario?');">Eliminar</a>
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <p class="text-muted text-center">No hay usuarios registrados.</p>
+  {% endif %}
+
+</div>
+{% endblock %}

@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Bienvenido a GIE{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'landing.css' %}">
+
+<section class="panel1 d-flex align-items-center text-center">
+  <div class="container text-white">
+    <h1 class="display-2 fw-bold">GIE</h1>
+    <h2 class="mb-4 fs-3 fw-light">Gestión Inteligente Empresarial</h2>
+    <p class="lead mx-auto mb-4" style="max-width: 700px;">
+      Automatiza procesos, mejora la productividad de tu equipo y toma decisiones inteligentes con nuestra plataforma integral para empresas.
+    </p>
+    <a href="{% url 'login' %}" class="btn btn-primary btn-lg px-5 py-3 rounded-pill shadow-sm">
+      Iniciar sesión
+    </a>
+  </div>
+</section>
+
+<section class="services">
+  <div class="container text-center">
+    <h2 class="fw-bold mb-2 text-dark">Cada función pensada para ti</h2>
+    <p class="text-muted mb-5">GIE simplifica tu gestión empresarial: automatiza, organiza y analiza en un solo lugar.</p>
+
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="service-card p-4 h-100  rounded-4">
+          <h5 class="fw-semibold text-dark">Control de Ventas</h5>
+          <p class="text-secondary">Registra y analiza ventas con estadísticas y exportación a PDF.</p>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="service-card p-4 h-100  rounded-4">
+          <h5 class="fw-semibold text-dark">Gestión de Personal</h5>
+          <p class="text-secondary">Fichajes, descansos y seguimiento de rendimiento del equipo.</p>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="service-card p-4 h-100  rounded-4">
+          <h5 class="fw-semibold text-dark">Stock y Recursos</h5>
+          <p class="text-secondary">Controla el inventario de materia prima y productos en tiempo real.</p>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="service-card p-4 h-100  rounded-4">
+          <h5 class="fw-semibold text-dark">Reservas Inteligentes</h5>
+          <p class="text-secondary">Sistema de reservas por franjas con validación automática.</p>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="service-card p-4 h-100  rounded-4">
+          <h5 class="fw-semibold text-dark">Gestión de Clientes</h5>
+          <p class="text-secondary">CRM básico para clientes, historial y acciones personalizadas.</p>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="service-card p-4 h-100  rounded-4">
+          <h5 class="fw-semibold text-dark">Tareas y Proyectos</h5>
+          <p class="text-secondary">Asignación de tareas por usuario, con control de tiempo y progreso.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="gieCarousel" class="carousel slide mt-5" data-bs-ride="carousel">
+  <div class="container">
+    <div class="carousel-inner rounded-4 shadow overflow-hidden">
+
+      <div class="carousel-item active position-relative">
+        <img src="{% static 'img/services/stock.jpg' %}" class="d-block w-100" alt="Slide 1">
+        <div class="carousel-overlay"></div>
+        <div class="carousel-caption-custom">
+          <h5>Automatización Total</h5>
+        </div>
+      </div>
+
+      <div class="carousel-item position-relative">
+        <img src="{% static 'img/services/gestion.jpg' %}" class="d-block w-100" alt="Slide 2">
+        <div class="carousel-overlay"></div>
+        <div class="carousel-caption-custom">
+          <h5>Gestión del Personal</h5>
+        </div>
+      </div>
+
+      <div class="carousel-item position-relative">
+        <img src="{% static 'img/services/datos.jpg' %}" class="d-block w-100" alt="Slide 3">
+        <div class="carousel-overlay"></div>
+        <div class="carousel-caption-custom">
+          <h5>Máximo Control</h5>
+        </div>
+      </div>
+
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#gieCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Anterior</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#gieCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Siguiente</span>
+    </button>
+  </div>
+</div>
+
+
+<section class="testimonial-section container">
+  <div id="testimonialContainer" class="testimonial-images d-flex justify-content-center flex-wrap gap-3 mb-4"></div>
+
+  <h2>Confiado por líderes<br><span class="text-secondary">de múltiples sectores</span></h2>
+  <p>Descubre por qué los profesionales eligen GIE para impulsar la eficiencia empresarial.</p>
+
+  <a href="/soporte/" class="btn btn-primary shadow-sm">
+    Contacta con nosotros
+  </a>
+</section>
+
+<script>
+  const container = document.getElementById('testimonialContainer');
+  const nombresClientes = ['severo', 'elche','eulogo','eduacion'];
+
+  nombresClientes.forEach(nombre => {
+    const img = document.createElement('img');
+    img.src = `{% static 'img/clientes/' %}` + nombre + `.png`;
+    img.alt = `Cliente ${nombre}`;
+    container.appendChild(img);
+  });
+</script>
+{% endblock %}

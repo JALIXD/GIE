@@ -1,0 +1,132 @@
+body {
+    background: linear-gradient(to bottom right, #ffffff, #b2c0ce);
+
+  }
+  
+  .panel1 {
+    padding: 100px 0;
+    text-align: center;
+  }
+  
+  .panel1 h1 {
+    font-size: 4rem;
+    font-weight: 900;
+    color: #0f172a;
+    margin-bottom: 0.5rem;
+  }
+  
+  .panel1 h2 {
+    font-size: 1.5rem;
+    color: #64748b;
+    margin-bottom: 1.5rem;
+  }
+  
+  .panel1 p {
+    max-width: 700px;
+    margin: 0 auto 2rem;
+    font-size: 1.125rem;
+    color: #475569;
+  }
+  
+  .panel1 a.btn {
+    font-size: 1.1rem;
+    padding: 0.75rem 2rem;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+  }
+  
+  .panel1 a.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  }
+  
+  .testimonial-section {
+    border-radius: 2rem;
+    padding: 4rem 1rem;
+    margin-top: 4rem;
+    text-align: center;
+  }
+  
+  .testimonial-images img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 1rem;
+    transition: transform 0.2s ease;
+  }
+  
+  .testimonial-images img:hover {
+    transform: scale(1.05);
+  }
+  
+  .testimonial-section h2 {
+    font-weight: 800;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .testimonial-section p {
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    color: #64748b;
+  }
+  /* servicios */
+
+  
+  .services h2 {
+    color: #0f172a;
+    font-size: 2.5rem; 
+  }
+  
+  .services p {
+    font-size: 1.1rem;
+    color: #64748b;
+  }
+  
+  .service-card {
+    transition: all 0.2s ease;
+  }
+  
+  .service-card:hover {
+    box-shadow: 0 0.75rem 1.25rem rgba(0, 0, 0, 0.05);
+    transform: translateY(-5px);
+  }
+  
+  .service-card h5 {
+    font-size: 1.5rem;
+  }
+  
+  .service-card p {
+    font-size: 1rem;
+  }
+  
+
+  .carousel-inner img {
+    max-height: 420px;
+    object-fit: cover;
+    width: 100%;
+  }
+  
+  .carousel-overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.45); 
+    z-index: 1;
+  }
+  
+  .carousel-caption-custom {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 2;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  }
+  
+  .carousel-caption-custom h5 {
+    font-size: 2rem;
+    font-weight: 700;
+  }
+  
+  

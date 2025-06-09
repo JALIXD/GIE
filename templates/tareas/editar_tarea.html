@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Editar Tarea{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="mb-4 text-center">Editar Tarea</h2>
+
+    <form method="post" class="card p-4 shadow-sm">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="text-center mt-3">
+            <button type="submit" class="btn btn-primary">Guardar cambios</button>
+            <a href="{% url 'ver_tareas_usuario' tarea.asignado_a.id %}" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

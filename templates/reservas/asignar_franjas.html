@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Franjas de {{ mesa.nombre }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2 class="mb-3">Franjas horarias asignadas a <strong>{{ mesa.nombre }}</strong></h2>
+
+  <a href="{% url 'crear_franja' %}?mesa_id={{ mesa.id }}" class="btn btn-outline-info">Franjas</a>
+
+  <table class="table table-bordered">
+    <thead class="table-dark">
+      <tr>
+        <th>Día</th>
+        <th>Inicio</th>
+        <th>Fin</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for franja in franjas %}
+      <tr>
+        <td>{{ franja.dia_semana }}</td>
+        <td>{{ franja.hora_inicio }}</td>
+        <td>{{ franja.hora_fin }}</td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="3" class="text-center">No hay franjas asignadas aún.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

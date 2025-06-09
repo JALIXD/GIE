@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}Reservar Mesa{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2>Reservar Mesa</h2>
+  <form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label class="form-label">Seleccionar Mesa</label>
+      <select name="mesa_id" class="form-select" required>
+        <option value="">-- Elegir mesa --</option>
+        {% for mesa in mesas %}
+        <option value="{{ mesa.id }}">{{ mesa.nombre }} (Capacidad: {{ mesa.capacidad }})</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Seleccionar Franja Horaria</label>
+      <select name="franja_id" class="form-select" required>
+        <option value="">-- Elegir franja --</option>
+        {% for franja in franjas %}
+        <option value="{{ franja.id }}">{{ franja.hora_inicio }} - {{ franja.hora_fin }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Nombre del Cliente</label>
+      <input type="text" name="cliente" class="form-control" required>
+    </div>
+    <button type="submit" class="btn btn-success">Reservar</button>
+  </form>
+</div>
+{% endblock %}

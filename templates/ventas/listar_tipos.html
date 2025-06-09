@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Tipos de Venta{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2>Editar Tipos de Venta</h2>
+
+  <div class="mb-3">
+    <a href="{% url 'crear_tipo_venta' %}" class="btn btn-primary">Crear Tipo</a>
+    <a href="{% url 'listar_ventas_admin' %}" class="btn btn-primary">Volver</a>
+  </div>
+
+  <table class="table table-bordered table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for tipo in tipos %}
+      <tr>
+        <td>{{ tipo.id }}</td>
+        <td>{{ tipo.nombre }}</td>
+        <td>{{ tipo.descripcion }}</td>
+        <td>
+          <a href="{% url 'editar_tipo_venta' tipo.id %}" class="btn btn-sm btn-warning">✏️ Editar</a>
+          <a href="{% url 'eliminar_tipo_venta' tipo.id %}" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de eliminar este tipo?')">🗑️ Eliminar</a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="4" class="text-center">No hay tipos registrados.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

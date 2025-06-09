@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Panel de Fichaje{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'fichaje.css' %}">
+{% endblock %}
+
+{% block content %}
+<h1 class="fw-bold mb-3 text-center">Bienvenido, {{ request.user.get_full_name|default:request.user.username }}</h1>
+
+<div class="container-fluid p-4">
+  <div class="row justify-content-center">
+
+    <!-- 📅 Calendario -->
+    <div class="col-md-3 mb-4">
+      <div class="card p-3 text-center">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <a href="?mes={{ mes_anterior }}&año={{ año_anterior }}" class="btn btn-outline-secondary btn-sm">←</a>
+          <h5 class="mb-0">{{ fecha|date:"F Y" }}</h5>
+          <a href="?mes={{ mes_siguiente }}&año={{ año_siguiente }}" class="btn btn-outline-secondary btn-sm">→</a>
+        </div>
+        <div id="calendario" class="table-responsive">
+          <table class="table calendar-table text-center">
+            <thead class="table-light">
+              <tr><th>L</th><th>M</th><th>X</th><th>J</th><th>V</th><th>S</th><th>D</th></tr>
+            </thead>
+            <tbody id="cuerpo-calendario"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ⏰ Reloj + Botones -->
+    <div class="col-md-6 mb-4">
+      <div class="card p-4 text-center">
+        {% if mensaje %}
+          <div class="alert alert-success">{{ mensaje }}</div>
+        {% endif %}
+        {% if error %}
+          <div class="alert alert-danger">{{ error }}</div>
+        {% endif %}
+
+        <div id="reloj" class="reloj">--:--:--</div>
+
+        <form method="POST">
+          {% csrf_token %}
+          <div class="d-flex flex-wrap justify-content-center">
+            <button name="accion" value="entrada" class="btn btn-success btn-fichaje">Entrada</button>
+            <button name="accion" value="salida" class="btn btn-danger btn-fichaje">Salida</button>
+            <button name="accion" value="descanso" class="btn btn-warning btn-fichaje">Descanso</button>
+            <button name="accion" value="regreso" class="btn btn-info btn-fichaje">Regreso</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- 🕒 Historial -->
+    <div class="col-md-3 mb-4">
+      <div class="card p-3">
+        <h5 class="text-center mb-3">Fichajes de {{ fecha|date:"d/m/Y" }}</h5>
+        <div class="historial">
+          {% for f in fichajes %}
+            <div class="border-bottom py-2">
+              {% if f.tipo == 'entrada' %}🟢{% elif f.tipo == 'salida' %}🔴
+              {% elif f.tipo == 'descanso' %}🟡{% elif f.tipo == 'regreso' %}🔵{% endif %}
+              <strong> {{ f.tipo|title }}</strong>
+              <span class="text-muted small">→ {{ f.timestamp|time:"H:i:s" }}</span>
+            </div>
+          {% empty %}
+            <p class="text-muted text-center">Sin movimientos aún.</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- JS Reloj + Calendario -->
+<script>
+  const diasConFichajes = {{ dias_con_fichajes|safe }};
+  const mesSeleccionado = {{ fecha.month }};
+  const añoSeleccionado = {{ fecha.year }};
+  const fechaSeleccionada = "{{ fecha|date:'Y-m-d' }}";
+
+  function actualizarReloj() {
+    const ahora = new Date();
+    document.getElementById('reloj').textContent = ahora.toLocaleTimeString('es-ES', { hour12: false });
+  }
+  setInterval(actualizarReloj, 1000);
+  actualizarReloj();
+
+  function generarCalendario() {
+    const tbody = document.getElementById("cuerpo-calendario");
+    tbody.innerHTML = "";
+    const mes = mesSeleccionado - 1;
+    const año = añoSeleccionado;
+    const hoyStr = new Date().toISOString().split('T')[0];
+    const primerDia = new Date(año, mes, 1).getDay();
+    const diasEnMes = new Date(año, mes + 1, 0).getDate();
+    let dia = 1;
+    for (let fila = 0; fila < 6; fila++) {
+      let tr = document.createElement("tr");
+      for (let col = 1; col <= 7; col++) {
+        const td = document.createElement("td");
+        let offset = (primerDia === 0 ? 6 : primerDia - 1);
+        let posicionDia = fila * 7 + col;
+        if (posicionDia > offset && dia <= diasEnMes) {
+          const fechaStr = `${año}-${String(mes + 1).padStart(2, '0')}-${String(dia).padStart(2, '0')}`;
+          td.classList.add("calendar-day");
+          if (fechaStr === hoyStr) td.classList.add("calendar-today");
+          if (diasConFichajes.includes(fechaStr)) td.classList.add("calendar-dia-activo");
+          if (fechaStr === fechaSeleccionada) td.classList.add("calendar-seleccionado");
+          td.innerHTML = `<a href="?fecha=${fechaStr}">${dia}</a>`;
+          dia++;
+        } else {
+          td.innerHTML = "&nbsp;";
+        }
+        tr.appendChild(td);
+      }
+      tbody.appendChild(tr);
+      if (dia > diasEnMes) break;
+    }
+  }
+
+  generarCalendario();
+</script>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Planes y Precios{% endblock %}
+
+{% block content %}
+<section class="pricing py-5">
+  <div class="container">
+    <h2 class="text-center fw-bold mb-7">Planes GIE</h2>
+    <p class="text-center text-muted mb-5">Selecciona el pack que mejor se adapte a las necesidades de tu empresa.</p>
+
+    <div class="row g-4 justify-content-center">
+
+      <!-- Pack Completo -->
+      <div class="col-md-5">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body text-center">
+            <h3 class="card-title fw-bold">Pack Completo</h3>
+            <p class="text-muted">Incluye todos los servicios disponibles en GIE: stock, empleados, ventas, clientes, reservas y más.</p>
+            <ul class="list-unstyled my-4">
+              <li>✔ Gestión de stock</li>
+              <li>✔ Control de empleados</li>
+              <li>✔ Registro de ventas</li>
+              <li>✔ Fidelización de clientes</li>
+              <li>✔ Sistema de reservas</li>
+              <li>✔ Informes y análisis</li>
+            </ul>
+            <a href="tel:617651107" class="btn btn-primary btn-lg d-block mx-auto" style="width: 50%;">Llamar para contratar</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pack Personalizado -->
+      <div class="col-md-5">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body text-center">
+            <h3 class="card-title fw-bold">Pack Personalizado</h3>
+            <p class="text-muted">Selecciona únicamente los módulos que necesitas y crea una solución adaptada a tu negocio.</p>
+            <ul class="list-unstyled my-4">
+              <li>✔ Eliges tus servicios</li>
+              <li>✔ Módulos personalizables</li>
+              <li>✔ Escalable y flexible</li>
+              <li>✔ Panel a medida</li>
+            </ul>
+            <a href="tel:617651107" class="btn btn-primary btn-lg d-block mx-auto" style="width: 50%;">Llamar para contratar</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endblock %}
