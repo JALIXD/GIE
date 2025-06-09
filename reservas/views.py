@@ -221,7 +221,6 @@ def reservar_mesa_usuario(request, mesa_id):
         ).values_list('franja_id', flat=True)
 
         franjas = FranjaHoraria.objects.filter(
-            mesa=mesa,
             dia_semana=dia_semana,
             activo=True
         ).exclude(id__in=franjas_reservadas).order_by('hora_inicio')
@@ -244,6 +243,7 @@ def reservar_mesa_usuario(request, mesa_id):
         'dia_semana': dia_semana,
         'franjas': franjas
     })
+
 @login_required
 def reservar_franja_usuario(request):
     mesas = Mesa.objects.filter(activa=True)
