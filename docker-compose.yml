@@ -8,20 +8,23 @@ services:
       - .:/app
     ports:
       - "8000:8000"
-    env_file:
-      - .env
+    environment:
+      SECRET_KEY: ytj5ars5xlyaw9sd6t8uoc-^f5=)6p4!j_j2jnffc08xf@+3zd
+      DEBUG: "True"
+      EMAIL_HOST_USER: gieintelligence@gmail.com
+      EMAIL_HOST_PASSWORD: olxq zeok imef ofve
+      DATABASE_URL: postgresql://gie_db_user:gie_db_pass@db:5432/gie_db
     depends_on:
       - db
 
   db:
-    image: mysql:8.0
+    image: postgres:15
     environment:
-      MYSQL_DATABASE: gie_db
-      MYSQL_USER: gie_user
-      MYSQL_PASSWORD: gie_pass
-      MYSQL_ROOT_PASSWORD: rootpass
+      POSTGRES_DB: gie_db
+      POSTGRES_USER: gie_db_user
+      POSTGRES_PASSWORD: gie_db_pass
     volumes:
-      - mysql_data:/var/lib/mysql
+      - pgdata:/var/lib/postgresql/data
 
 volumes:
-  mysql_data:
+  pgdata:
