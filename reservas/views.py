@@ -209,9 +209,9 @@ def reservar_mesa_usuario(request, mesa_id):
         fecha_obj = datetime.strptime(fecha_actual, "%Y-%m-%d")
         dia_semana_en = calendar.day_name[fecha_obj.weekday()]
         traduccion = {
-            'Monday': 'lunes', 'Tuesday': 'martes', 'Wednesday': 'miercoles',
-            'Thursday': 'jueves', 'Friday': 'viernes',
-            'Saturday': 'sabado', 'Sunday': 'domingo'
+            'Monday': 'Lunes', 'Tuesday': 'Martes', 'Wednesday': 'Miércoles',
+            'Thursday': 'Jueves', 'Friday': 'Viernes',
+            'Saturday': 'Sábado', 'Sunday': 'Domingo'
         }
         dia_semana = traduccion.get(dia_semana_en)
 
